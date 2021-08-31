@@ -2,14 +2,14 @@ import React from "react";
 import styled from "styled-components";
 
 import { Header } from "Components/Header";
-import TodoContainer from "Components/todo/TodoContainer";
+import { TodoList } from "Components/todo/TodoList";
 
 const Home: React.FC = () => {
   return (
     <>
       <Header />
       <Main>
-        <TodoContainer />
+        <TodoList />
       </Main>
     </>
   );
@@ -18,7 +18,7 @@ export default Home;
 
 const Main = styled.main`
   min-height: 100vh;
-  padding-top: 60px;
+  padding-top: 120px;
 `;
 
 // const Section = styled.section`
