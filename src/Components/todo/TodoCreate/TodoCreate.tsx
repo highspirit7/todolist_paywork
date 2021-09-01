@@ -115,7 +115,7 @@ const InputWrapper = styled.div`
 `;
 
 const CircleButton = styled.button`
-  background: #33bb77;
+  background: ${({ theme }) => theme.colors.green};
   width: 40px;
   height: 40px;
   font-size: 42px;

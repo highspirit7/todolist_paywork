@@ -30,15 +30,11 @@ export function createTodoItem(
       ? JSON.parse(localStorage[key])
       : initialTodos;
 
-    try {
-      todos.todoList.push(todoItem);
+    todos.todoList.push(todoItem);
 
-      localStorage.setItem(key, JSON.stringify(todos));
+    localStorage.setItem(key, JSON.stringify(todos));
 
-      return { msg: "투두아이템이 생성되었습니다" };
-    } catch (error) {
-      console.log(error);
-    }
+    return { msg: "투두아이템이 생성되었습니다" };
   } else {
     return { msg: "유효한 URL 요청이 아닙니다" };
   }
@@ -48,12 +44,92 @@ export function getTodos(url: string): GetTodosResponse | undefined {
   const key = url.includes("/") ? url.split("/")[1] : url.split("/")[0];
 
   if (key === "todo" && url.split("/").length < 3) {
-    try {
-      return localStorage[key]
-        ? JSON.parse(localStorage[key])
-        : localStorage[key];
-    } catch (error) {
-      console.log(error);
+    return localStorage[key]
+      ? JSON.parse(localStorage[key])
+      : localStorage[key];
+  } else {
+    return { msg: "유효한 URL 요청이 아닙니다" };
+  }
+}
+
+export function removeTodoItem(url: string): Message {
+  // url 핸들링, id 추출
+  // url 유효하지 않은 경우
+  // 해당 id 아이템 없는 경우
+  // 삭제된 경우
+
+  const key = url.includes("/") ? url.split("/")[1] : url.split("/")[0];
+
+  if (key === "todo" && url.split("/").length === 3) {
+    const removalId = url.split("/")[2];
+    let todos = localStorage[key]
+      ? JSON.parse(localStorage[key])
+      : localStorage[key];
+
+    if (todos && todos.todoList) {
+      todos = JSON.parse(localStorage[key]);
+      const index = todos.todoList.findIndex(
+        (todoItem: ITodoItem) => todoItem.id === removalId,
+      );
+
+      if (index > -1) {
+        todos.todoList.splice(index, 1);
+        console.log(todos);
+
+        localStorage.setItem(key, JSON.stringify(todos));
+        return {
+          msg: "투두아이템이 삭제되었습니다",
+        };
+      } else {
+        return {
+          msg: "삭제할 수 있는 투두아이템이 없습니다",
+        };
+      }
+    } else {
+      return {
+        msg: "투두 리스트가 존재하지 않습니다",
+      };
+    }
+  } else {
+    return { msg: "유효한 URL 요청이 아닙니다" };
+  }
+}
+
+export function toggleTodoItem(url: string): Message {
+  // url 핸들링, id 추출
+  // url 유효하지 않은 경우
+  // 해당 id 아이템 없는 경우
+  // 삭제된 경우
+
+  const key = url.includes("/") ? url.split("/")[1] : url.split("/")[0];
+
+  if (key === "todo" && url.split("/").length === 3) {
+    const toggleId = url.split("/")[2];
+    let todos = localStorage[key]
+      ? JSON.parse(localStorage[key])
+      : localStorage[key];
+
+    if (todos && todos.todoList) {
+      todos = JSON.parse(localStorage[key]);
+      const index = todos.todoList.findIndex(
+        (todoItem: ITodoItem) => todoItem.id === toggleId,
+      );
+
+      if (index > -1) {
+        todos.todoList[index].isCheck = !todos.todoList[index].isCheck;
+        localStorage.setItem(key, JSON.stringify(todos));
+        return {
+          msg: "투두아이템이 토글되었습니다",
+        };
+      } else {
+        return {
+          msg: "토글할 수 있는 투두아이템이 없습니다",
+        };
+      }
+    } else {
+      return {
+        msg: "투두 리스트가 존재하지 않습니다",
+      };
     }
   } else {
     return { msg: "유효한 URL 요청이 아닙니다" };

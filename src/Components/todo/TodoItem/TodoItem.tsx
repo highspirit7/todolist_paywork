@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import moment from "moment";
 
 import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
 import { ITodoItem } from "types";
+import { removeTodoItem, toggleTodoItem } from "api";
+
 interface ITodoItemProps {
   todo: ITodoItem;
 }
 
 const TodoItem: React.FC<ITodoItemProps> = ({ todo }) => {
-  const { content, isCheck, dueDate } = todo;
+  const { id, content, isCheck, dueDate } = todo;
   const now = new Date();
   const dDay = Math.abs(
     moment([now.getFullYear(), now.getMonth(), now.getDate()]).diff(
@@ -19,24 +21,48 @@ const TodoItem: React.FC<ITodoItemProps> = ({ todo }) => {
   );
 
   return (
-    <TodoItemBlock>
-      <CheckCircle done={isCheck}>{isCheck && <CheckOutlined />}</CheckCircle>
-      <Text done={isCheck}>{content}</Text>
-      <Dday done={isCheck}>{`D-${dDay}`}</Dday>
-      <Remove>
-        <DeleteOutlined />
-      </Remove>
-    </TodoItemBlock>
+    <>
+      <TodoItemBlock>
+        <CheckCircle
+          done={isCheck}
+          onClick={() => {
+            console.log(toggleTodoItem(`/todo/${id}`));
+          }}
+        >
+          {isCheck && <CheckOutlined />}
+        </CheckCircle>
+        <Text done={isCheck}>{content}</Text>
+        <Dday done={isCheck}>{`D-${dDay}`}</Dday>
+        <RemoveButton
+          done={isCheck}
+          onClick={() => {
+            console.log(removeTodoItem(`/todo/${id}`));
+          }}
+        >
+          <DeleteOutlined />
+        </RemoveButton>
+      </TodoItemBlock>
+    </>
   );
 };
 
-const Remove = styled.div`
+const RemoveButton = styled.button<{ done: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #119955;
+  color: ${({ theme }) => theme.colors.green};
   font-size: 16px;
   cursor: pointer;
+
+  ${(props) =>
+    props.done &&
+    css`
+      color: #ced4da;
+    `}
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.green};
+  }
 `;
 
 const TodoItemBlock = styled.div`
@@ -45,7 +71,7 @@ const TodoItemBlock = styled.div`
   padding-top: 12px;
   padding-bottom: 12px;
   &:hover {
-    ${Remove} {
+    ${RemoveButton} {
       display: initial;
     }
   }
@@ -71,6 +97,7 @@ const CheckCircle = styled.div<{ done: boolean }>`
 `;
 
 const Text = styled.div<{ done: boolean }>`
+  /* cursor: pointer; */
   flex: 1;
   font-size: 16px;
   color: #119955;

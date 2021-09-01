@@ -21,6 +21,10 @@ const GlobalStyles = createGlobalStyle`
       -moz-osx-font-smoothing: grayscale;
       background: #eeeeee;
     }
+    button {
+      background: transparent;
+      border: none;
+    }
 `;
 
 export default GlobalStyles;
