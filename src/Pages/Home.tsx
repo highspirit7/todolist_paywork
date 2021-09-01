@@ -2,14 +2,14 @@ import React from "react";
 import styled from "styled-components";
 
 import { Header } from "Components/Header";
-import { TodoList } from "Components/todo/TodoList";
+import TodoSection from "Components/todo/TodoSection";
 
 const Home: React.FC = () => {
   return (
     <>
       <Header />
       <Main>
-        <TodoList />
+        <TodoSection />
       </Main>
     </>
   );
