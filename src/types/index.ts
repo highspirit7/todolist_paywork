@@ -6,8 +6,11 @@ export interface ITodoItem {
   dueDate: string;
 }
 
-// export type Count = number;
-
 export interface ITodoList {
   todoList: ITodoItem[];
+}
+
+export interface ITodosResponse {
+  todoList: ITodoItem[];
+  msg: string;
 }

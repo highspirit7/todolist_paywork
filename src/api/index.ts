@@ -1,14 +1,7 @@
-import { ITodoItem, ITodoList } from "types";
+import { ITodoItem, ITodoList, ITodosResponse } from "types";
 
 interface Message {
   msg: string;
-}
-
-// count 없어지면서 ITodoList 필요한지 모르는 상황
-// msg포함시켜 모든 api 리스폰스 타입 제작 필요
-interface GetTodosResponse {
-  todoList?: ITodoItem[];
-  msg?: string;
 }
 
 const initialTodos: ITodoList = {
@@ -40,15 +33,20 @@ export function createTodoItem(
   }
 }
 
-export function getTodos(url: string): GetTodosResponse | undefined {
+export function getTodos(url: string): ITodosResponse {
   const key = url.includes("/") ? url.split("/")[1] : url.split("/")[0];
 
   if (key === "todo" && url.split("/").length < 3) {
-    return localStorage[key]
+    const todos = localStorage[key]
       ? JSON.parse(localStorage[key])
       : localStorage[key];
+
+    return {
+      todoList: todos,
+      msg: "투두 리스트를 성공적으로 전송받았습니다",
+    };
   } else {
-    return { msg: "유효한 URL 요청이 아닙니다" };
+    return { todoList: [], msg: "유효한 URL 요청이 아닙니다" };
   }
 }
 
