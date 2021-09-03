@@ -1,12 +1,20 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
+import { RootState } from "store/reducers";
+
 const Todofooter: React.FC = () => {
-  // const undoneTasks = todos.filter((todo) => !todo.done);
+  const state = useSelector((state: RootState) => state.todos);
+
+  const leftTasks = state.todoList.filter((todoItem) => !todoItem.isCheck);
+  const leftTasksNumber = leftTasks.length;
+  const doneTasksNumber = state.todoList.length - leftTasksNumber;
+
   return (
     <TodoFooterBlock>
-      <Text>1 items left</Text>
-      <Text>2 items done</Text>
+      <Text>{leftTasksNumber} items left</Text>
+      <Text>{doneTasksNumber} items done</Text>
     </TodoFooterBlock>
   );
 };
