@@ -18,7 +18,7 @@ const TodoList = () => {
   todoList.sort(
     (a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime(),
   );
-  console.log("todolist rerendered");
+
   return (
     <TodoListBlock>
       {todoList.map((todo) => (
