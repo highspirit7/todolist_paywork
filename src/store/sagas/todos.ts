@@ -1,21 +1,18 @@
 import {
   createTodoSuccess,
   createTodoFailure,
-  getTodosRequest,
   getTodosSuccess,
   getTodosFailure,
-  removeTodoRequest,
   removeTodoSuccess,
   removeTodoFailure,
-  toggleTodoRequest,
   toggleTodoSuccess,
   toggleTodoFailure,
 } from "store/actions/todos";
 
 import * as api from "api";
 import { takeEvery, put, takeLatest, call } from "redux-saga/effects";
+import { ITodoList } from "types";
 
-import { ITodoItem, ITodoList } from "types";
 import {
   CreateTodoRequestAction,
   GetTodosRequestAction,

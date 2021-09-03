@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
+import { useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
 import moment from "moment";
 
 import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
 import { ITodoItem } from "types";
-import { removeTodoItem, toggleTodoItem } from "api";
+import { removeTodoRequest, toggleTodoRequest } from "store/actions/todos";
 
 interface ITodoItemProps {
   todo: ITodoItem;
@@ -13,6 +14,7 @@ interface ITodoItemProps {
 const TodoItem: React.FC<ITodoItemProps> = ({ todo }) => {
   const { id, content, isCheck, dueDate } = todo;
   const now = new Date();
+  const dispatch = useDispatch();
   const dDay = Math.abs(
     moment([now.getFullYear(), now.getMonth(), now.getDate()]).diff(
       moment(dueDate),
@@ -26,7 +28,7 @@ const TodoItem: React.FC<ITodoItemProps> = ({ todo }) => {
         <CheckCircle
           done={isCheck}
           onClick={() => {
-            console.log(toggleTodoItem(`/todo/${id}`));
+            dispatch(toggleTodoRequest(id));
           }}
         >
           {isCheck && <CheckOutlined />}
@@ -36,7 +38,7 @@ const TodoItem: React.FC<ITodoItemProps> = ({ todo }) => {
         <RemoveButton
           done={isCheck}
           onClick={() => {
-            console.log(removeTodoItem(`/todo/${id}`));
+            dispatch(removeTodoRequest(id));
           }}
         >
           <DeleteOutlined />

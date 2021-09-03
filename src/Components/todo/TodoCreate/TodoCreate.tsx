@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { DatePicker } from "antd";
@@ -6,14 +7,11 @@ import moment from "moment";
 import { v4 as uuidv4 } from "uuid";
 
 import { warning } from "utils/modals";
-import { createTodoItem } from "api";
 import { ITodoItem } from "types";
-
-// interface ITodoCreateProps {
-//   createTodo: (text: string, date: string) => void;
-// }
+import { createTodoRequest } from "store/actions/todos";
 
 const TodoCreate: React.FC = () => {
+  const dispatch = useDispatch();
   const [value, setValue] = useState("");
   const [dateString, setDateString] = useState("");
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -59,7 +57,7 @@ const TodoCreate: React.FC = () => {
         dueDate: dateString,
       };
 
-      console.log(createTodoItem(todoItem, "/todo"));
+      dispatch(createTodoRequest(todoItem));
 
       setValue(""); // input 초기화
       setDateString(""); // dateString 초기화

@@ -58,7 +58,7 @@ const todos = (
         (todoItem: ITodoItem) => todoItem.id !== action.payload.data.todoId,
       );
       return {
-        message: action.payload.data,
+        message: action.payload.data.msg,
         todoList: stateAfterRemoval,
       };
     case REMOVE_TODO_FAILURE:
@@ -72,8 +72,8 @@ const todos = (
       const stateAfterToggle = state.todoList.map((todoItem: ITodoItem) => {
         if (action.payload.data.todoId === todoItem.id) {
           todoItem.isCheck = !todoItem.isCheck;
-        }
-        return todoItem;
+          return todoItem;
+        } else return todoItem;
       });
       return {
         message: action.payload.data.msg,

@@ -44,7 +44,6 @@ export function removeTodoItem(removalId: string): {
 
     if (index > -1) {
       todos.todoList.splice(index, 1);
-      console.log(todos);
 
       localStorage.setItem(key, JSON.stringify(todos));
       return {
