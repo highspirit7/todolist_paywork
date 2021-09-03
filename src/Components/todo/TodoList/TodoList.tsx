@@ -15,17 +15,23 @@ const TodoList = () => {
   }, [dispatch]);
 
   const { todoList } = state;
-  todoList.sort(
-    (a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime(),
-  );
+
+  useEffect(() => {
+    if (todoList) {
+      todoList.sort(
+        (a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime(),
+      );
+    }
+  }, [todoList]);
 
   return (
     <TodoListBlock>
-      {todoList.map((todo) => (
-        // todoItem 내부 isCheck 값이 바뀌어도 key 값이 그대로라 변경된
-        // 부분이 바로 렌더되지 않았어서 key 값을 아래와 같이 조정.
-        <TodoItem key={todo.id + todo.isCheck} todo={todo} />
-      ))}
+      {todoList &&
+        todoList.map((todo) => (
+          // todoItem 내부 isCheck 값이 바뀌어도 key 값이 그대로라 변경된
+          // 부분이 바로 렌더되지 않았어서 key 값을 아래와 같이 조정.
+          <TodoItem key={todo.id + todo.isCheck} todo={todo} />
+        ))}
     </TodoListBlock>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -6,10 +6,18 @@ import { RootState } from "store/reducers";
 
 const Todofooter: React.FC = () => {
   const state = useSelector((state: RootState) => state.todos);
+  const [leftTasksNumber, setLeftTasksNumber] = useState(0);
+  const [doneTasksNumber, setDoneTasksNumber] = useState(0);
+  const { todoList } = state;
 
-  const leftTasks = state.todoList.filter((todoItem) => !todoItem.isCheck);
-  const leftTasksNumber = leftTasks.length;
-  const doneTasksNumber = state.todoList.length - leftTasksNumber;
+  useEffect(() => {
+    if (todoList) {
+      const leftTasks = state.todoList.filter((todoItem) => !todoItem.isCheck);
+
+      setLeftTasksNumber(leftTasks.length);
+      setDoneTasksNumber(todoList.length - leftTasksNumber);
+    }
+  }, [todoList]);
 
   return (
     <TodoFooterBlock>
