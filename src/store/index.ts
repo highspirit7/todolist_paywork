@@ -1,5 +1,7 @@
 import { createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
+import { composeWithDevTools } from "redux-devtools-extension";
+
 import rootReducer from "./reducers";
 import sagas from "./sagas";
 
@@ -7,7 +9,10 @@ import sagas from "./sagas";
 const sagaMiddleware = createSagaMiddleware();
 
 // store 생성
-const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(sagaMiddleware)),
+);
 
 // 사가 미들웨어에서 통합 사가 함수를 실행시킨다.
 sagaMiddleware.run(sagas);

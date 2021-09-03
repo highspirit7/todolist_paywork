@@ -1,7 +1,22 @@
-export const CREATE_TODO = "CREATE_TODO" as const;
+import { ITodoItem } from "types";
 
-export const GET_TODOS = "GET_TODOS" as const;
+export const CREATE_TODO_REQUEST = "CREATE_TODO_REQUEST" as const;
+export const CREATE_TODO_SUCCESS = "CREATE_TODO_SUCCESS" as const;
+export const CREATE_TODO_FAILURE = "CREATE_TODO_FAILURE" as const;
 
-export const REMOVE_TODO = "REMOVE_TODO" as const;
+export const GET_TODOS_REQUEST = "GET_TODOS_REQUEST" as const;
+export const GET_TODOS_SUCCESS = "GET_TODOS_SUCCESS" as const;
+export const GET_TODOS_FAILURE = "GET_TODOS_FAILURE" as const;
 
-export const TOGGLE_TODO = "TOGGLE_TODO" as const;
+export const REMOVE_TODO_REQUEST = "REMOVE_TODO_REQUEST" as const;
+export const REMOVE_TODO_SUCCESS = "REMOVE_TODO_SUCCESS" as const;
+export const REMOVE_TODO_FAILURE = "REMOVE_TODO_FAILURE" as const;
+
+export const TOGGLE_TODO_REQUEST = "TOGGLE_TODO_REQUEST" as const;
+export const TOGGLE_TODO_SUCCESS = "TOGGLE_TODO_SUCCESS" as const;
+export const TOGGLE_TODO_FAILURE = "TOGGLE_TODO_FAILURE" as const;
+
+export interface ITodosState {
+  todoList: ITodoItem[];
+  message: any;
+}

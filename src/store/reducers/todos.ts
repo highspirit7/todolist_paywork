@@ -1,42 +1,88 @@
-import { CREATE_TODO, GET_TODOS, REMOVE_TODO, TOGGLE_TODO } from "../types";
+import {
+  CREATE_TODO_REQUEST,
+  CREATE_TODO_SUCCESS,
+  CREATE_TODO_FAILURE,
+  GET_TODOS_REQUEST,
+  GET_TODOS_SUCCESS,
+  GET_TODOS_FAILURE,
+  REMOVE_TODO_REQUEST,
+  REMOVE_TODO_SUCCESS,
+  REMOVE_TODO_FAILURE,
+  TOGGLE_TODO_REQUEST,
+  TOGGLE_TODO_SUCCESS,
+  TOGGLE_TODO_FAILURE,
+} from "../types";
 import { ActionRequest } from "store/actions/todos";
 
-import { ITodoList, ITodoItem } from "types";
+import { ITodoItem } from "types";
+import { ITodosState } from "../types";
 
-const INITIAL_STATE: ITodoList = {
+const INITIAL_STATE: ITodosState = {
   todoList: [],
+  message: "",
 };
 
 const todos = (
-  state: ITodoList = INITIAL_STATE,
+  state: ITodosState = INITIAL_STATE,
   action: ActionRequest,
-): ITodoList => {
+): ITodosState => {
   switch (action.type) {
-    case CREATE_TODO:
+    case CREATE_TODO_REQUEST:
+      return state;
+    case CREATE_TODO_SUCCESS:
       return {
-        todoList: [...state.todoList, action.payload.data],
+        todoList: [...state.todoList, action.payload.data.todoItem],
+        message: action.payload.data.msg,
       };
-    case GET_TODOS:
+    case CREATE_TODO_FAILURE:
       return {
-        todoList: action.payload.data.todoList,
+        ...state,
+        message: action.payload.data,
       };
-    case REMOVE_TODO:
+    case GET_TODOS_REQUEST:
+      return state;
+    case GET_TODOS_SUCCESS:
+      return {
+        ...state,
+        todoList: action.payload.data,
+      };
+    case GET_TODOS_FAILURE:
+      return {
+        ...state,
+        message: action.payload.data,
+      };
+    case REMOVE_TODO_REQUEST:
+      return state;
+    case REMOVE_TODO_SUCCESS:
       const stateAfterRemoval = state.todoList.filter(
-        (todoItem: ITodoItem) => todoItem.id !== action.payload.data,
+        (todoItem: ITodoItem) => todoItem.id !== action.payload.data.todoId,
       );
       return {
-        todoList: [...stateAfterRemoval],
+        message: action.payload.data,
+        todoList: stateAfterRemoval,
       };
-    case TOGGLE_TODO:
+    case REMOVE_TODO_FAILURE:
+      return {
+        ...state,
+        message: action.payload.data,
+      };
+    case TOGGLE_TODO_REQUEST:
+      return state;
+    case TOGGLE_TODO_SUCCESS:
       const stateAfterToggle = state.todoList.map((todoItem: ITodoItem) => {
-        if (action.payload.data === todoItem.id) {
+        if (action.payload.data.todoId === todoItem.id) {
           todoItem.isCheck = !todoItem.isCheck;
         }
-
         return todoItem;
       });
       return {
-        todoList: [...stateAfterToggle],
+        message: action.payload.data.msg,
+        todoList: stateAfterToggle,
+      };
+    case TOGGLE_TODO_FAILURE:
+      return {
+        ...state,
+        message: action.payload.data,
       };
     default:
       return state;
