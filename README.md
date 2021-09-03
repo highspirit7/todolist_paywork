@@ -44,4 +44,4 @@ Project start for development
 <br/>
 
 ## 기술 스택
-React, AntDesign, Styled-Components, TypeScript
+React, AntDesign, Styled-Components, TypeScript, Redux, Redux-saga
