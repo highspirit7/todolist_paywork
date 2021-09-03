@@ -46,8 +46,9 @@ export function* createTodoSaga() {
 export function* getTodos(action: GetTodosRequestAction) {
   try {
     const { todoList }: ITodoList = yield call(api.getTodos);
-
-    yield put(getTodosSuccess(todoList));
+    console.log(todoList);
+    if (todoList) yield put(getTodosSuccess(todoList));
+    else yield put(getTodosFailure("투두 리스트가 존재하지 않습니다"));
   } catch (error) {
     yield put(getTodosFailure(error));
   }

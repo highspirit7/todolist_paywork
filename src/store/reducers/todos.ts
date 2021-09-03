@@ -30,8 +30,9 @@ const todos = (
     case CREATE_TODO_REQUEST:
       return state;
     case CREATE_TODO_SUCCESS:
+      state.todoList.push(action.payload.data.todoItem);
       return {
-        todoList: [...state.todoList, action.payload.data.todoItem],
+        todoList: [...state.todoList],
         message: action.payload.data.msg,
       };
     case CREATE_TODO_FAILURE:
