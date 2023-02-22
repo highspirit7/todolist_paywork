@@ -3,10 +3,6 @@
 - 개발 기간 : 2021.08.30 ~ 2021.09.03
 - [원티드 프론트엔드 프리온보딩 코스 안내 링크](https://www.wanted.co.kr/events/pre_onboarding_course_2)      
 
-<br/>     
-
-## Demo Link
-[데모 링크](https://elastic-brahmagupta-52a1ff.netlify.app/)
 
 <br/>
 
